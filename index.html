@@ -3,214 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Utileria.js | Formulario de Registro</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Componente Toast | Demo</title>
+    <link rel="stylesheet" href="css/componente.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="contenedor-formulario">
-        <h1>Formulario de Registro</h1>
-        <p class="subtitulo">Prueba en vivo las 6 funciones obligatorias de <strong>utileria.js</strong>.</p>
-        <p class="subtitulo"><a href="index.html" style="color: var(--color-acento);">← Volver al login</a></p>
+    <div class="contenedor">
+        <h1>Componente Toast</h1>
+        <p class="subtitulo">* Notificaciones flotantes reutilizables, con un solo llamado a <code>mostrarToast()</code>.</p>
 
-        <form id="formulario-registro" novalidate>
-            <div class="grupo-formulario">
-                <label for="nombre">Nombre completo</label>
-                <input type="text" id="nombre" placeholder="Ej: María José Pérez" autocomplete="off">
-                <span id="error-nombre" class="mensaje-error"></span>
-            </div>
+        <h2>Ejemplos rápidos</h2>
+        <div class="grupo-botones">
+            <button class="boton-demo" id="btn-exito">✓ Éxito</button>
+            <button class="boton-demo" id="btn-error">✕ Error</button>
+            <button class="boton-demo" id="btn-advertencia">! Advertencia</button>
+            <button class="boton-demo" id="btn-info">i Información</button>
+        </div>
 
-            <div class="grupo-formulario">
-                <label for="correo">Correo electrónico</label>
-                <input type="text" id="correo" placeholder="Ej: correo@ejemplo.com" autocomplete="off">
-                <span id="error-correo" class="mensaje-error"></span>
-            </div>
-
-            <div class="grupo-formulario">
-                <label for="telefono">Teléfono (máximo 10 dígitos)</label>
-                <input type="text" id="telefono" placeholder="Ej: 9511234567" autocomplete="off">
-                <span id="error-telefono" class="mensaje-error"></span>
-            </div>
-
-            <div class="grupo-formulario">
-                <label for="fecha-nacimiento">Fecha de nacimiento</label>
-                <input type="date" id="fecha-nacimiento">
-                <span id="error-fecha" class="mensaje-error"></span>
-            </div>
-
-            <div class="grupo-formulario">
-                <label for="password">Contraseña</label>
-                <input type="password" id="password" placeholder="Mín. 8 caracteres, con mayúscula, número y símbolo" autocomplete="off">
-                <span id="error-password" class="mensaje-error"></span>
-            </div>
-
-            <button type="button" id="btn-registrar" class="boton-enviar">Registrarse</button>
-            
-            <!-- Botón porque no deja volver main al login-->
-            <a href="login.html" class="boton-secundario" style="display: block; text-align: center; margin-top: 15px; text-decoration: none;">¿Ya tienes cuenta? Iniciar Sesión</a>
-        </form>
-    </div>
-
-    <div class="seccion-extra">
-        <h2>Extra 1 — capitalizarTexto()</h2>
-        <p class="subtitulo">Normaliza un texto escrito con mayúsculas/minúsculas inconsistentes.</p>
+        <h2>Pruébalo con tu propio contenido</h2>
         <div class="grupo-formulario">
-            <label for="texto-libre">Escribe un texto (ej: "mARIA josé PÉREZ")</label>
-            <input type="text" id="texto-libre" placeholder="Escribe aquí...">
+            <label>Título (opcional)</label>
+            <input type="text" id="input-titulo" placeholder="Ej: Pedido confirmado">
         </div>
-        <button type="button" id="btn-capitalizar" class="boton-secundario">Capitalizar</button>
-        <div id="resultado-capitalizar" class="resultado-extra"></div>
-    </div>
-
-    <div class="seccion-extra">
-        <h2>Extra 2 — calcularDiasRestantes()</h2>
-        <p class="subtitulo">Calcula cuántos días faltan para una fecha importante.</p>
         <div class="grupo-formulario">
-            <label for="fecha-objetivo">Fecha objetivo</label>
-            <input type="date" id="fecha-objetivo">
+            <label>Mensaje</label>
+            <input type="text" id="input-mensaje" placeholder="Escribe el mensaje del toast">
         </div>
-        <button type="button" id="btn-dias" class="boton-secundario">Calcular días restantes</button>
-        <div id="resultado-dias" class="resultado-extra"></div>
+        <div class="grupo-formulario">
+            <label>Tipo</label>
+            <select id="select-tipo">
+                <option value="info">Información</option>
+                <option value="exito">Éxito</option>
+                <option value="error">Error</option>
+                <option value="advertencia">Advertencia</option>
+            </select>
+        </div>
+        <div class="grupo-formulario">
+            <label>Duración en ms(milisegundos)</label>
+            <input type="number" id="input-duracion" value="4000" min="0" step="500">
+        </div>
+        <button type="button" class="boton-enviar" id="btn-personalizado">Mostrar mi toast</button>
     </div>
 
-    <div id="modal-edad" class="overlay-modal">
-        <div class="caja-modal">
-            <div class="icono-modal">♥</div>
-            <h2>* Un archivo ha sido creado.</h2>
-            <p>* Según tu fecha de nacimiento...</p>
-            <div id="modal-edad-valor" class="dato-destacado">-- años</div>
-            <p id="modal-mayor-edad"></p>
-            <button type="button" id="btn-cerrar-modal" class="boton-enviar">Cerrar</button>
-        </div>
-    </div>
-
-    <script src="js/utileria.js"></script>
+    <script src="js/componente.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const inputNombre = document.getElementById('nombre');
-            const inputCorreo = document.getElementById('correo');
-            const inputTelefono = document.getElementById('telefono');
-            const inputFecha = document.getElementById('fecha-nacimiento');
-            const inputPassword = document.getElementById('password');
-            const btnRegistrar = document.getElementById('btn-registrar');
-            const modal = document.getElementById('modal-edad');
-            const modalEdadValor = document.getElementById('modal-edad-valor');
-            const modalMayorEdad = document.getElementById('modal-mayor-edad');
-            const btnCerrarModal = document.getElementById('btn-cerrar-modal');
+        document.getElementById('btn-exito').addEventListener('click', () => {
+            mostrarToast({ titulo: '* Un archivo ha sido creado.', mensaje: 'Los cambios se guardaron correctamente.', tipo: 'exito' });
+        });
 
-            inputFecha.max = new Date().toISOString().split('T')[0];
+        document.getElementById('btn-error').addEventListener('click', () => {
+            mostrarToast({ titulo: '* Algo salió mal.', mensaje: 'No se pudo conectar con el servidor.', tipo: 'error' });
+        });
 
-            function limpiarErrores() {
-                ['nombre', 'correo', 'telefono', 'fecha', 'password'].forEach(campo => {
-                    document.getElementById(`error-${campo}`).textContent = '';
-                });
+        document.getElementById('btn-advertencia').addEventListener('click', () => {
+            mostrarToast({ mensaje: 'Tu sesión está por expirar en 2 minutos.', tipo: 'advertencia' });
+        });
+
+        document.getElementById('btn-info').addEventListener('click', () => {
+            mostrarToast({ mensaje: 'Hay una nueva actualización disponible.', tipo: 'info', duracion: 5000 });
+        });
+
+        document.getElementById('btn-personalizado').addEventListener('click', () => {
+            const titulo = document.getElementById('input-titulo').value.trim();
+            const mensaje = document.getElementById('input-mensaje').value.trim();
+            const tipo = document.getElementById('select-tipo').value;
+            const duracion = Number(document.getElementById('input-duracion').value);
+
+            if (!mensaje) {
+                mostrarToast({ mensaje: 'Escribe un mensaje antes de mostrar el toast.', tipo: 'error' });
+                return;
             }
 
-            function abrirModal(edad, mayorEdad) {
-                modalEdadValor.textContent = `${edad} años`;
-                modalMayorEdad.textContent = mayorEdad
-                    ? 'Eres mayor de edad ✅'
-                    : 'Eres menor de edad ⚠️';
-                modal.classList.add('activo');
-            }
-
-            function cerrarModal() {
-                modal.classList.remove('activo');
-            }
-
-            btnCerrarModal.addEventListener('click', cerrarModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) cerrarModal();
-            });
-
-            btnRegistrar.addEventListener('click', () => {
-                limpiarErrores();
-                let formularioValido = true;
-
-                const nombre = inputNombre.value.trim();
-                const correo = inputCorreo.value.trim();
-                const telefono = inputTelefono.value.trim();
-                const fechaNacimiento = inputFecha.value;
-                const password = inputPassword.value;
-
-                const nombreValido = nombre !== '' && soloLetras(nombre);
-                console.log('soloLetras(nombre):', nombreValido);
-                if (!nombreValido) {
-                    document.getElementById('error-nombre').textContent = 'Ingresa un nombre válido (solo letras).';
-                    formularioValido = false;
-                }
-
-                const correoValido = validarCorreo(correo);
-                console.log('validarCorreo(correo):', correoValido);
-                if (!correoValido) {
-                    document.getElementById('error-correo').textContent = 'Ingresa un correo electrónico válido.';
-                    formularioValido = false;
-                }
-
-                const telefonoEsNumerico = telefono !== '' && !isNaN(telefono);
-                const telefonoValido = telefonoEsNumerico && validarLongitud(Number(telefono), 10);
-                console.log('validarLongitud(telefono, 10):', telefonoValido);
-                if (!telefonoValido) {
-                    document.getElementById('error-telefono').textContent = 'Ingresa un teléfono numérico de máximo 10 dígitos.';
-                    formularioValido = false;
-                }
-
-                let edad = null;
-                let mayorEdad = false;
-                const hoy = new Date();
-                hoy.setHours(0, 0, 0, 0);
-
-                if (fechaNacimiento === '') {
-                    document.getElementById('error-fecha').textContent = 'Selecciona tu fecha de nacimiento.';
-                    formularioValido = false;
-                } else if (new Date(fechaNacimiento) > hoy) {
-                    document.getElementById('error-fecha').textContent = 'La fecha de nacimiento no puede ser una fecha futura.';
-                    formularioValido = false;
-                } else {
-                    edad = calcularEdad(fechaNacimiento);
-                    mayorEdad = esMayorDeEdad(fechaNacimiento);
-                    console.log('calcularEdad(fechaNacimiento):', edad);
-                    console.log('esMayorDeEdad(fechaNacimiento):', mayorEdad);
-                }
-
-                const passwordValido = validarPassword(password);
-                console.log('validarPassword(password):', passwordValido);
-                if (!passwordValido) {
-                    document.getElementById('error-password').textContent =
-                        'Debe tener 8+ caracteres, mayúscula, minúscula, número y símbolo.';
-                    formularioValido = false;
-                }
-
-                if (formularioValido) {
-                    console.log('✅ Formulario válido. Abriendo modal con la edad calculada.');
-                    abrirModal(edad, mayorEdad);
-                } else {
-                    console.log('❌ Formulario con errores. Revisa los mensajes en pantalla.');
-                }
-            });
-
-            const inputTextoLibre = document.getElementById('texto-libre');
-            const resultadoCapitalizar = document.getElementById('resultado-capitalizar');
-            document.getElementById('btn-capitalizar').addEventListener('click', () => {
-                const texto = inputTextoLibre.value;
-                const resultado = capitalizarTexto(texto);
-                console.log('capitalizarTexto(texto):', resultado);
-                resultadoCapitalizar.textContent = resultado ? `Resultado: "${resultado}"` : '';
-            });
-
-            const inputFechaObjetivo = document.getElementById('fecha-objetivo');
-            const resultadoDias = document.getElementById('resultado-dias');
-            document.getElementById('btn-dias').addEventListener('click', () => {
-                if (inputFechaObjetivo.value === '') {
-                    resultadoDias.textContent = 'Selecciona una fecha.';
-                    return;
-                }
-                const dias = calcularDiasRestantes(inputFechaObjetivo.value);
-                console.log('calcularDiasRestantes(fechaObjetivo):', dias);
-                resultadoDias.textContent = `Faltan ${dias} día(s).`;
-            });
+            mostrarToast({ titulo, mensaje, tipo, duracion });
         });
     </script>
 </body>

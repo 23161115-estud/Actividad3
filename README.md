@@ -1,148 +1,119 @@
-# utileria.js
+# Componente Toast
 
 ## Portada
 
-**utileria.js** es una librería de JavaScript puro (sin frameworks, sin componentes visuales) con 8 funciones reutilizables para resolver problemas comunes en formularios web:
+**Componente Toast** es una librería visual reutilizable en JavaScript puro (sin frameworks) que muestra notificaciones flotantes ("toasts") en la esquina de la pantalla, sin interrumpir al usuario ni requerir que recargue la página.
 
-- Validar que un correo electrónico tenga un formato correcto.
-- Validar que un campo de texto contenga solo letras.
-- Validar que un número no exceda una cantidad máxima de dígitos.
-- Calcular la edad exacta de una persona a partir de su fecha de nacimiento.
-- Verificar si alguien es mayor de edad.
-- Validar que una contraseña cumpla requisitos mínimos de seguridad.
-- Normalizar texto a formato "Título".
-- Calcular cuántos días faltan para una fecha objetivo.
-
-El problema que resuelve: evitar reescribir la misma lógica de validación en cada formulario del sitio, centralizándola en un único archivo reutilizable, documentado y fácil de integrar.
+**Problema que resuelve:** dar retroalimentación visual inmediata al usuario (éxito, error, advertencia o información) sin depender de un `alert()` bloqueante ni tener que escribir HTML y animaciones desde cero cada vez que se necesita avisar algo. Se llama con una sola función, `mostrarToast()`, y funciona en cualquier página con contenido distinto cada vez.
 
 
 ---
 
 ## Instalación
 
-No requiere ningún gestor de paquetes ni build. Solo agrega el script antes de tu propio código:
+Agrega el CSS y el JS del componente en tu página:
 
 ```html
-<script src="js/utileria.js"></script>
+<link rel="stylesheet" href="css/componente.css">
+<script src="js/componente.js"></script>
 ```
 
-Al cargarse, todas las funciones quedan disponibles globalmente en tu página — puedes llamarlas directamente desde cualquier otro `<script>` o archivo `.js` que se cargue después.
+Con eso, la función `mostrarToast()` queda disponible globalmente en tu página.
 
 ---
 
 ## Uso
 
-### 1. `validarCorreo(correo)`
-
-Valida que un correo electrónico tenga un formato correcto.
+### Toast básico
 
 ```javascript
-validarCorreo("sanchi.perez@example.com"); // R: true
-validarCorreo("correo-invalido");   // R: false     
+mostrarToast({ mensaje: "Guardado con éxito", tipo: "exito" });
 ```
 
-### 2. `soloLetras(texto)`
-
-Valida que un texto contenga solo letras (mayúsculas, minúsculas, vocales acentuadas y ñ). Permite espacios, pensado para nombres completos.
+### Toast con título
 
 ```javascript
-soloLetras("María José Pérez"); // R: true
-soloLetras("Juan123");  // R: false        
+mostrarToast({
+  titulo: "Sin conexión",
+  mensaje: "Revisa tu internet e intenta de nuevo.",
+  tipo: "error"
+});
 ```
 
-### 3. `validarLongitud(numero, maxLongitud)`
-
-Valida que la cantidad de dígitos de un número no exceda un máximo.
+### Controlar cuánto tiempo dura en pantalla
 
 ```javascript
-validarLongitud(4421367890, 10); // R: true
-validarLongitud(44213678901, 10); // R: false
+mostrarToast({
+  mensaje: "Esta notificación dura 8 segundos.",
+  tipo: "info",
+  duracion: 8000 // en milisegundos
+});
 ```
 
-### 4. `calcularEdad(fechaNacimiento)`
-
-Calcula la edad en años cumplidos a partir de una fecha de nacimiento.
+### Toast que no se cierra solo (duracion: 0)
 
 ```javascript
-calcularEdad("2000-05-14"); 
+mostrarToast({
+  mensaje: "Debes cerrar esto manualmente.",
+  tipo: "advertencia",
+  duracion: 0
+});
 ```
 
-### 5. `esMayorDeEdad(fechaNacimiento)`
+### Parámetros disponibles
 
-Determina si una persona es mayor de edad (18+).
+| Parámetro  | Tipo   | Obligatorio | Descripción                                                        |
+|------------|--------|:-----------:|----------------------------------------------------------------------|
+| `mensaje`  | string | Sí          | Texto principal del toast.                                          |
+| `titulo`   | string | No          | Texto en negrita arriba del mensaje.                                |
+| `tipo`     | string | No          | `"exito"`, `"error"`, `"advertencia"` o `"info"` (por defecto).      |
+| `duracion` | number | No          | Milisegundos antes de auto-cerrarse. `0` = no se cierra solo. Por defecto: `4000`. |
 
-```javascript
-esMayorDeEdad("2000-05-14"); // R: true
-esMayorDeEdad("2015-01-01"); // R: false
-```
-
-### 6. `validarPassword(password)`
-
-Valida que una contraseña tenga mayúscula, minúscula, número, carácter especial y mínimo 8 caracteres.
-
-```javascript
-validarPassword("Segura#2024"); // R: true
-validarPassword("segura");      // R: false
-```
-
-### 7. `capitalizarTexto(texto)` — función extra
-
-Normaliza un texto a formato "Título" (primera letra de cada palabra en mayúscula).
-
-```javascript
-capitalizarTexto("mARIA josé PÉREZ"); // R: "Maria José Pérez"
-```
-
-### 8. `calcularDiasRestantes(fechaObjetivo)` — función extra
-
-Calcula cuántos días faltan para una fecha objetivo.
-
-```javascript
-calcularDiasRestantes("2026-12-25"); // depende de la fecha actual
-```
+La reutilización viene de que `mostrarToast()` genera el HTML dinámicamente cada vez que se llama — puedes mostrar 1, 5 o 20 toasts distintos en la misma página, cada uno con su propio contenido, sin tocar el HTML.
 
 ---
 
 ## Estructura del repositorio
 
 ```
-/utileria
+/componente-toast
 ├── README.md
-├── index.html      → Formulario con las 6 validaciones obligatorias + modal de edad
-├── login.html       → Login que usa validarCorreo() y validarPassword()
+├── index.html        → Página de demo con el componente en acción
 ├── css/
-│   └── styles.css
+│   └── componente.css
 ├── js/
-│   └── utileria.js  → La librería
+│   └── componente.js  → La librería del componente
 └── img/
 ```
 
+---
+
+## Demo en vivo
+
+Este proyecto tiene GitHub Pages activado. Pruébalo aquí:
+
+
+---
 
 ## Capturas de pantalla
 
-**Formulario de registro (`index.html`)** — usa las 6 validaciones obligatorias:
+**Página de demo** — el componente instalado, listo para usarse:
 
-![Formulario de registro](img/Captura%20de%20pantalla%20formulario.png)
+![Página de demo](img/Captura%20de%20pantalla%20demo.png)
 
-**Resultado del formulario **:
+**Varios toasts apilados** — se pueden mostrar distintos tipos al mismo tiempo, cada uno con su color:
 
-![Resultado del formulario](img/Captura%20de%20pantalla.png)
+![Toasts apilados](img/Captura%20de%20pantalla%20toasts.png)
 
-**Login (`login.html`)** — usa `validarCorreo()` y `validarPassword()`:
+**Contenido personalizado** — el mismo componente, reutilizado con título, mensaje y tipo distintos:
 
-![Login](img/Captura%20de%20pantalla1.png)
-
-**Funciones extra** — `capitalizarTexto()` y `calcularDiasRestantes()`:
-
-![Funciones extra](img/Captura%20de%20pantalla%20extra.png)
-
-
+![Toast personalizado](img/Captura%20de%20pantalla%20personalizado.png)
 
 ---
 
 ## Video demo
 
-https://drive.google.com/file/d/1E-_ZnL72V12BRJudfjtwlcLfHFsHX8sx/view?usp=sharing&t=6.762
+https://drive.google.com/file/d/1K3pe9rePsk-FdQV_OrlLOxSLxQoS7SYg/view?usp=sharing
 
 ---
 
